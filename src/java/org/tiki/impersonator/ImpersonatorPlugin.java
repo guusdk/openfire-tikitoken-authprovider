@@ -14,7 +14,7 @@ public class ImpersonatorPlugin implements Plugin {
 	@Override
 	public void initializePlugin(PluginManager manager, File pluginDirectory) {
 		String originalProvider = JiveGlobals.getProperty("provider.auth.className");
-		JiveGlobals.setProperty("org.tiki.impersonator.originalProvider", "org.jivesoftware.openfire.ldap.LdapAuthProvider");
+		JiveGlobals.setProperty("org.tiki.impersonator.originalProvider", originalProvider);
 		JiveGlobals.setProperty("provider.auth.className", "org.tiki.impersonator.ImpersonatorAuthProvider");
 	}
 
