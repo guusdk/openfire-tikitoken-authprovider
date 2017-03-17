@@ -62,17 +62,17 @@ public class ImpersonatorAuthProvider implements AuthProvider {
 
 	@Override
 	public int getIterations(String username) throws UnsupportedOperationException, UserNotFoundException {
-		return this.getIterations(username);
+		return this.originalProvider.getIterations(username);
 	}
 
 	@Override
 	public String getServerKey(String username) throws UnsupportedOperationException, UserNotFoundException {
-		return this.getServerKey(username);
+		return this.originalProvider.getServerKey(username);
 	}
 
 	@Override
 	public String getStoredKey(String username) throws UnsupportedOperationException, UserNotFoundException {
-		return this.getStoredKey(username);
+		return this.originalProvider.getStoredKey(username);
 	}
 
 }
