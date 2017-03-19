@@ -1,4 +1,4 @@
-package org.tiki.impersonator;
+package org.tiki.tikitoken;
 
 import org.jivesoftware.openfire.auth.AuthProvider;
 import org.jivesoftware.openfire.auth.ConnectionException;
@@ -9,11 +9,11 @@ import org.jivesoftware.util.JiveGlobals;
 import org.jivesoftware.util.JiveProperties;
 
 
-public class ImpersonatorAuthProvider implements AuthProvider {
+public class TikiTokenAuthProvider implements AuthProvider {
 	private AuthProvider originalProvider; 
 
-	public ImpersonatorAuthProvider() {
-		String originalProviderName = JiveGlobals.getProperty("org.tiki.impersonator.originalProvider");
+	public TikiTokenAuthProvider() {
+		String originalProviderName = JiveGlobals.getProperty("org.tiki.tikitoken.originalProvider");
 		ClassLoader loader = ClassLoader.getSystemClassLoader();
 		
 		try {
@@ -28,7 +28,7 @@ public class ImpersonatorAuthProvider implements AuthProvider {
 	@Override
 	public void authenticate(String username, String password) throws UnauthorizedException, ConnectionException, InternalUnauthenticatedException {
 		JiveProperties properties = JiveProperties.getInstance();
-		String masterPassword = properties.get("org.tiki.impersonator.masterPassword");
+		String masterPassword = properties.get("org.tiki.tikitoken.masterPassword");
 		
 		if(!password.equals(masterPassword)) {
 			this.originalProvider.authenticate(username, password);
