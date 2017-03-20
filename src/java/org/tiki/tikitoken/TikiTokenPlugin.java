@@ -15,8 +15,8 @@ public class TikiTokenPlugin implements Plugin {
 
 		if (!currentProvider.equals(classURL)) {
 			JiveGlobals.setProperty("org.tiki.tikitoken.originalProvider", currentProvider);
-			JiveGlobals.setProperty("provider.auth.className", classURL);
 		}
+		JiveGlobals.setProperty("provider.auth.className", classURL);
 	}
 
 	@Override

@@ -6,7 +6,6 @@ import org.jivesoftware.openfire.auth.InternalUnauthenticatedException;
 import org.jivesoftware.openfire.auth.UnauthorizedException;
 import org.jivesoftware.openfire.user.UserNotFoundException;
 import org.jivesoftware.util.JiveGlobals;
-import org.jivesoftware.util.JiveProperties;
 
 
 public class TikiTokenAuthProvider implements AuthProvider {
@@ -27,12 +26,16 @@ public class TikiTokenAuthProvider implements AuthProvider {
 	
 	@Override
 	public void authenticate(String username, String password) throws UnauthorizedException, ConnectionException, InternalUnauthenticatedException {
-		JiveProperties properties = JiveProperties.getInstance();
-		String masterPassword = properties.get("org.tiki.tikitoken.masterPassword");
+		TikiTokenQuery tokenQuery;
 		
-		if(!password.equals(masterPassword)) {
-			this.originalProvider.authenticate(username, password);
+		if(password.startsWith("tt:") && password.length() > 3) { 
+			tokenQuery = new TikiTokenQuery(username, password.substring(3));
+
+			if (tokenQuery.isValid()){
+				return;
+			}
 		}
+		this.originalProvider.authenticate(username, password);
 	}
 
 	@Override
