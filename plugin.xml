@@ -1,14 +1,11 @@
 <plugin>
     <class>org.tiki.tikitoken.TikiTokenPlugin</class>
     <name>TikiToken</name>
-    <description>Accept logins from Tiki-Wiki without password.</description>
+    <description>Allows users to authenticate with a Tiki token.</description>
     <author>Tiki Wiki CMS GroupWare</author>
-    <version>0.1</version>
-    <date>19/03/2017</date>
+    <version>0.2</version>
+    <date>21/03/2017</date>
     <url>https://dev.tiki.org/OpenFire</url>
     <minServerVersion>4.1.3</minServerVersion>
     <licenseType>gpl</licenseType>
-
-    <adminconsole>
-    </adminconsole>
 </plugin>
