@@ -3,12 +3,11 @@ package org.tiki.tikitoken;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Map;
+import java.util.Scanner;
 
-import org.apache.commons.io.IOUtils;
 import org.jivesoftware.util.JiveGlobals;
 
 import com.owlike.genson.Genson;
@@ -46,7 +45,10 @@ public class TikiTokenQuery {
 		try {
 			URL url = this.getUrl();
 			InputStream stream = url.openStream();
-			return IOUtils.toString(stream);
+			Scanner s = new java.util.Scanner( stream ).useDelimiter( "\\A" );
+			String result = s.hasNext() ? s.next() : "";
+			s.close();
+			return result;
 		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();
 		}
