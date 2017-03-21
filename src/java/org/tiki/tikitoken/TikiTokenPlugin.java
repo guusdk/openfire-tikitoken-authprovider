@@ -1,28 +1,28 @@
 package org.tiki.tikitoken;
 
-import java.io.File;
-
 import org.jivesoftware.openfire.container.Plugin;
 import org.jivesoftware.openfire.container.PluginManager;
-import org.jivesoftware.util.JiveGlobals;
+import org.jivesoftware.openfire.net.SASLAuthentication;
 
-public class TikiTokenPlugin implements Plugin {
+import java.io.File;
+import java.security.Security;
 
-	@Override
-	public void initializePlugin(PluginManager manager, File pluginDirectory) {
-		String classURL = "org.tiki.tikitoken.TikiTokenAuthProvider";
-		String currentProvider = JiveGlobals.getProperty("provider.auth.className");
+/**
+ * An Openfire plugin that adds the TikiToken SASL mechanism.
+ */
+public class TikiTokenPlugin implements Plugin
+{
+    @Override
+    public void initializePlugin( PluginManager manager, File pluginDirectory )
+    {
+        Security.addProvider( new TikiTokenSaslProvider() );
+        SASLAuthentication.addSupportedMechanism( TikiTokenSaslServer.MECHANISM_NAME );
+    }
 
-		if (!currentProvider.equals(classURL)) {
-			JiveGlobals.setProperty("org.tiki.tikitoken.originalProvider", currentProvider);
-		}
-		JiveGlobals.setProperty("provider.auth.className", classURL);
-	}
-
-	@Override
-	public void destroyPlugin() {
-		String originalProvider = JiveGlobals.getProperty("org.tiki.tikitoken.originalProvider");
-		JiveGlobals.setProperty("provider.auth.className", originalProvider);
-	}
-	
+    @Override
+    public void destroyPlugin()
+    {
+        SASLAuthentication.removeSupportedMechanism( TikiTokenSaslServer.MECHANISM_NAME );
+        Security.removeProvider( TikiTokenSaslProvider.NAME );
+    }
 }
